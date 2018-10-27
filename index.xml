@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc maxdepth="4"?>
+<?asciidoc-numbered?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>reactor-examples (0.0.1)</title>
+<date>2018-10-27 02:59:59 UTC</date>
+<author>
+<personname>
+<firstname>Maksim</firstname>
+<surname>Kostromin</surname>
+</personname>
+<email>daggerok@gmail.com</email>
+</author>
+<authorinitials>MK</authorinitials>
+<revhistory>
+<revision>
+<revnumber>0.0.1</revnumber>
+<date>2018-10-27 02:59:59 UTC</date>
+<authorinitials>MK</authorinitials>
+</revision>
+</revhistory>
+</info>
+<chapter xml:id="introduction">
+<title>Introduction</title>
+<formalpara>
+<title>docker / docker-compose</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">./mvnw
+./mvnw package docker-compose:up -P docker
+./mvnw docker-compose:down -P docker
+
+./gradlew
+./gradlew composeUp
+./gradlew composeDown</programlisting>
+</para>
+</formalpara>
+</chapter>
+<chapter xml:id="implementations">
+<title>Implementations</title>
+<simpara>links:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><link xl:href="https://projectreactor.io/learn">Helpful presentation</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.baeldung.com/reactor-core">Reactor intro</link></simpara>
+</listitem>
+</itemizedlist>
+<formalpara>
+<title>build</title>
+<para>
+<programlisting language="java" linenumbering="unnumbered">package daggerok;
+
+import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
+
+@Slf4j
+public class App {
+  public static void main(String[] args) {
+    Flux.range(0, 10)
+        .map(integer -&gt; integer * integer)
+        .filter(integer -&gt; integer % 3 != 0)
+        .buffer(3)
+        .subscribe(integers -&gt; log.info("result: {}", integers));
+  }
+}</programlisting>
+</para>
+</formalpara>
+<formalpara>
+<title>build</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">./mvnw -p ./map-filter-buffer/pom.xml
+java -jar ./map-filter-buffer/target/*-all.jar
+
+# gradle jar
+./gradlew -b ./map-filter-buffer/build.gradle
+java -jar ./map-filter-buffer/build/libs/*-all.jar</programlisting>
+</para>
+</formalpara>
+<simpara>links:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><link xl:href="https://projectreactor.io/learn">Helpful presentation</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.baeldung.com/reactor-core">Reactor intro</link></simpara>
+</listitem>
+</itemizedlist>
+<formalpara>
+<title>build</title>
+<para>
+<programlisting language="java" linenumbering="unnumbered">package daggerok;
+
+import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
+
+@Slf4j
+public class App {
+  public static void main(String[] args) {
+    Flux.range(0, 10)
+        .map(integer -&gt; integer * integer)
+        .filter(integer -&gt; integer % 3 != 0)
+        .retry()
+        .subscribe(integers -&gt; log.info("result: {}", integers));
+  }
+}</programlisting>
+</para>
+</formalpara>
+<formalpara>
+<title>build</title>
+<para>
+<programlisting language="bash" linenumbering="unnumbered">./mvnw -p ./map-filter-retry/pom.xml
+java -jar ./map-filter-retry/target/*-all.jar
+
+# gradle jar
+./gradlew -b ./map-filter-retry/build.gradle
+java -jar ./map-filter-retry/build/libs/*-all.jar</programlisting>
+</para>
+</formalpara>
+</chapter>
+<chapter xml:id="links">
+<title>Links</title>
+<itemizedlist>
+<listitem>
+<simpara><link xl:href="https://github.com/daggerok/reactor-examples">GitHub repo</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://daggerok.github.io/reactor-examples">GitHub pages</link></simpara>
+</listitem>
+</itemizedlist>
+</chapter>
+</book>
