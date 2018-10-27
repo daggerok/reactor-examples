@@ -8,7 +8,7 @@ image:https://img.shields.io/bitbucket/pipelines/daggerok/reactor-examples.svg["
 
 //tag::content[]
 
-//Read link:https://daggerok.github.io/reactor-examples[project reference documentation]
+Read link:https://daggerok.github.io/reactor-examples[project reference documentation]
 
 .docker / docker-compose
 [source,bash]
