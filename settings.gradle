@@ -1,0 +1,3 @@
+rootProject.name = 'reactor-examples'
+enableFeaturePreview 'STABLE_PUBLISHING'
+include 'docs'

@@ -1,0 +1,3 @@
+rootProject.name = 'map-filter-buffer'
+enableFeaturePreview 'STABLE_PUBLISHING'
+include 'docs'
