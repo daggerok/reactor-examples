@@ -25,6 +25,7 @@ include::../README.adoc[tags=content]
 == Implementations
 
 include::../map-filter-buffer/README.adoc[tags=content]
+include::../map-filter-retry/README.adoc[tags=content]
 
 == Links
 

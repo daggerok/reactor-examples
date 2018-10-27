@@ -4,7 +4,7 @@ notifications:
 env:
   global:
   - TERM=dumb
-  - secure: e8ZmnHwpalvOYQrtgUo7R5VfCiXg+Vfjg5GlTkoZfrqJ39w5W8qlvkhtJyDYb9yNOkyUew+5UBRve/3IzanVB038IiZpgoCrt8l+WIeGfmMcddX/K9olWxesI0Pi0d/iqGkuHt861oYGLa7Co1Eqb4NLmq0psoKXRG+I60fEdMTbDk4/i3q3iXjDO7EXJ2q+tzfNPBJqSdFRhDmXnU5VVC8AE565dNZzVL69hC2S2WomJ705zFLOcP1rWOq/k8UXzp7bxRiJJQVlNg4gMMylc/UI3eoSRDUOXocOxDtDfvjlxpIjlDMOTWF3xEXtNXjPkzXScQ1OVO9CpbYtjYqV6gVDqak+rN1RI1XoABIir0uQ78OKG1fbtoJOn0AotvzxBuZSPCs/opOZvGbu/BrDEyW1IKUZxScLFbu4CEsPGKUFaBpHwOFi4Y6RZfF9APTMi6IM0OAeZc4gd27Y2T5ZEWJx3DPfvoyVV2i2j0tiz31Y8FqPkgelPhcE85jAVueStkKUbthDBPtW/wutj0ZFT+nbRPdhEusEAhqLw6tUkOCGe4oMzYKFjjj7vqohi4c9dHLcogSebZJjbKLTAJkwUnkx2sQiD7Dg94VscHdNWELuhG1n0mLTsImAFXVSNEVnsshlB4BE3OYJJ16JWOMIpbE4Edy4yx3nS//+UZwckFg=
+  - secure: TAsK9QeWPnBvISvptzerQKiyIYfGrpSN/ZSYITVpFbAd0P8uY7o43cEC37ltBCpHp/nXmZ7SwJdw49rdsS/Lun4lPLTozyoAZJdVtjbIC6Oq/KohULSVa/AOphV/rjZU+2uM3BJy6wXRs11IEMJWqGMtkYmuBs4LIqUy9Juc8F7M2HpSBsSaEne6fakg4vfWMHeLFJFhEw0TDRbNFhXCGhnxF9aPKlLJIViibzoPpzJdep7E0TiUbiZAQ3lOX32CFsDq9y/xHzIunQFo7VVT4uQLqtuBq42LoxCbboFKRdWG/hUTML3c6kdl8SIjElnzX3aed6bbw+KxRAGcIGse/eHjlq0Pu7Gies+dTk3gUyaCbDMP5+cumOd6VjbKXVgKaiJlyzxTa2UoFSkzQhp9aGohxph377um5FkYoDDWv7eG+hcGXhPBRhK6e052kAU/Ug0b1T+I7LBSxxCV9buijY7GgqDOrErpmSJ435KgmiNpUtXItGQBak7pL7285672xHDwJ0Zc2zg7NvoEImeFlRXTTrfg+Zg/C8wx2IF2+KIY3gLZaxdcLLy9b9NUdDKS46MVvd4G/PdxJJgt5FbSuGoXSmXmTwWA/VeAvD+c6mjf7LUfQTVuq2BuLicf2V7gz7EhCZCjG208h7RxoLx8UZZtqVJ6bLt+xU68hOJOhpo=
 
 language: java
 jdk: oraclejdk8
@@ -50,11 +50,15 @@ before_install:
 script:
 - export root=$(pwd)
 #
-- ./mvnw -p ./map-filter-buffer/pom.xml
+- ./mvnw -f ./map-filter-buffer/pom.xml
 - java -jar ./map-filter-buffer/target/*-all.jar
-#
 - ./gradlew -b ./map-filter-buffer/build.gradle
 - java -jar ./map-filter-buffer/build/libs/*-all.jar
+#
+- ./mvnw -f ./map-filter-retry/pom.xml
+- java -jar ./map-filter-retry/target/*-all.jar
+- ./gradlew -b ./map-filter-retry/build.gradle
+- java -jar ./map-filter-retry/build/libs/*-all.jar
 
 before_deploy:
 - cd ${root}

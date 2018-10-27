@@ -15,6 +15,12 @@ links:
 - link:https://www.baeldung.com/reactor-core[Reactor intro]
 
 .build
+[source,java]
+----
+include::./src/main/java/daggerok/App.java[]
+----
+
+.build
 [source,bash]
 ----
 ./mvnw -p ./map-filter-buffer/pom.xml
