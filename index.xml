@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>reactor-examples (0.0.1)</title>
-<date>2019-01-27 17:37:18 UTC</date>
+<date>2019-01-27 20:43:50 UTC</date>
 <author>
 <personname>
 <firstname>Maksim</firstname>
@@ -16,7 +16,7 @@
 <revhistory>
 <revision>
 <revnumber>0.0.1</revnumber>
-<date>2019-01-27 17:37:18 UTC</date>
+<date>2019-01-27 20:43:50 UTC</date>
 <authorinitials>MK</authorinitials>
 </revision>
 </revhistory>
@@ -79,15 +79,6 @@ java -jar ./map-filter-buffer/target/*-all.jar
 java -jar ./map-filter-buffer/build/libs/*-all.jar</programlisting>
 </para>
 </formalpara>
-<simpara>links:</simpara>
-<itemizedlist>
-<listitem>
-<simpara><link xl:href="https://projectreactor.io/learn">Helpful presentation</link></simpara>
-</listitem>
-<listitem>
-<simpara><link xl:href="https://www.baeldung.com/reactor-core">Reactor intro</link></simpara>
-</listitem>
-</itemizedlist>
 <formalpara>
 <title>build</title>
 <para>
