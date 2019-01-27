@@ -3,70 +3,70 @@ notifications:
 
 env:
   global:
-  - TERM=dumb
-  - secure: TAsK9QeWPnBvISvptzerQKiyIYfGrpSN/ZSYITVpFbAd0P8uY7o43cEC37ltBCpHp/nXmZ7SwJdw49rdsS/Lun4lPLTozyoAZJdVtjbIC6Oq/KohULSVa/AOphV/rjZU+2uM3BJy6wXRs11IEMJWqGMtkYmuBs4LIqUy9Juc8F7M2HpSBsSaEne6fakg4vfWMHeLFJFhEw0TDRbNFhXCGhnxF9aPKlLJIViibzoPpzJdep7E0TiUbiZAQ3lOX32CFsDq9y/xHzIunQFo7VVT4uQLqtuBq42LoxCbboFKRdWG/hUTML3c6kdl8SIjElnzX3aed6bbw+KxRAGcIGse/eHjlq0Pu7Gies+dTk3gUyaCbDMP5+cumOd6VjbKXVgKaiJlyzxTa2UoFSkzQhp9aGohxph377um5FkYoDDWv7eG+hcGXhPBRhK6e052kAU/Ug0b1T+I7LBSxxCV9buijY7GgqDOrErpmSJ435KgmiNpUtXItGQBak7pL7285672xHDwJ0Zc2zg7NvoEImeFlRXTTrfg+Zg/C8wx2IF2+KIY3gLZaxdcLLy9b9NUdDKS46MVvd4G/PdxJJgt5FbSuGoXSmXmTwWA/VeAvD+c6mjf7LUfQTVuq2BuLicf2V7gz7EhCZCjG208h7RxoLx8UZZtqVJ6bLt+xU68hOJOhpo=
+    - TERM=dumb
+    - secure: TAsK9QeWPnBvISvptzerQKiyIYfGrpSN/ZSYITVpFbAd0P8uY7o43cEC37ltBCpHp/nXmZ7SwJdw49rdsS/Lun4lPLTozyoAZJdVtjbIC6Oq/KohULSVa/AOphV/rjZU+2uM3BJy6wXRs11IEMJWqGMtkYmuBs4LIqUy9Juc8F7M2HpSBsSaEne6fakg4vfWMHeLFJFhEw0TDRbNFhXCGhnxF9aPKlLJIViibzoPpzJdep7E0TiUbiZAQ3lOX32CFsDq9y/xHzIunQFo7VVT4uQLqtuBq42LoxCbboFKRdWG/hUTML3c6kdl8SIjElnzX3aed6bbw+KxRAGcIGse/eHjlq0Pu7Gies+dTk3gUyaCbDMP5+cumOd6VjbKXVgKaiJlyzxTa2UoFSkzQhp9aGohxph377um5FkYoDDWv7eG+hcGXhPBRhK6e052kAU/Ug0b1T+I7LBSxxCV9buijY7GgqDOrErpmSJ435KgmiNpUtXItGQBak7pL7285672xHDwJ0Zc2zg7NvoEImeFlRXTTrfg+Zg/C8wx2IF2+KIY3gLZaxdcLLy9b9NUdDKS46MVvd4G/PdxJJgt5FbSuGoXSmXmTwWA/VeAvD+c6mjf7LUfQTVuq2BuLicf2V7gz7EhCZCjG208h7RxoLx8UZZtqVJ6bLt+xU68hOJOhpo=
 
 language: java
 jdk: oraclejdk8
 
 service:
-- docker
+  - docker
 
 addons:
   apt:
     sources:
-    - google-chrome
+      - google-chrome
     packages:
-    - google-chrome-stable
-    - libappindicator1
-    - fonts-liberation
-    - bash
-    - curl
-    - libxml2-utils
-    - docker-ce
+      - google-chrome-stable
+      - libappindicator1
+      - fonts-liberation
+      - bash
+      - curl
+      - libxml2-utils
+      - docker-ce
+      - tree
+      - jq
+      - python-pip
+      - sudo
 
 install: true
 before_install:
-- export CHROME_BIN=/usr/bin/google-chrome
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-#
-- sudo add-apt-repository universe -y >/dev/null
-- echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list >/dev/null
-- sudo apt-get update -yqq >/dev/null
-- sudo apt-get install -yqq --no-install-suggests --no-install-recommends
-  tree jq python-pip curl bash sudo >/dev/null
-#
-- sudo pip install docker-compose httpie >/dev/null 2>&1
-#
-- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-- stop_any 8080 3000 80 >/dev/null
-#
-- curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - >/dev/null
-- echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list >/dev/null
-- sudo apt-get update -yqq >/dev/null
-- sudo apt-get install -yqq --no-install-suggests --no-install-recommends yarn >/dev/null
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  #
+  - sudo pip install docker-compose httpie >/dev/null 2>&1
+  #
+  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+  - stop_any 8080 3000 80 >/dev/null
 
 script:
-- export root=$(pwd)
-#
-- ./mvnw -f ./map-filter-buffer/pom.xml
-- java -jar ./map-filter-buffer/target/*-all.jar
-- ./gradlew -b ./map-filter-buffer/build.gradle
-- java -jar ./map-filter-buffer/build/libs/*-all.jar
-#
-- ./mvnw -f ./map-filter-retry/pom.xml
-- java -jar ./map-filter-retry/target/*-all.jar
-- ./gradlew -b ./map-filter-retry/build.gradle
-- java -jar ./map-filter-retry/build/libs/*-all.jar
+  - export root=$(pwd)
+  #
+  - ./mvnw -f ./random-examples/pom.xml
+  - ./gradlew -b ./random-examples/build.gradle
+  #
+  - ./mvnw -f ./map-filter-buffer/pom.xml
+  - java -jar ./map-filter-buffer/target/*-all.jar
+  - ./gradlew -b ./map-filter-buffer/build.gradle
+  - rm -rf ./map-filter-buffer/build/libs/*javadoc*.jar
+  - rm -rf ./map-filter-buffer/build/libs/*sources*.jar
+  - java -jar ./map-filter-buffer/build/libs/*.jar
+  #
+  - ./mvnw -f ./map-filter-retry/pom.xml
+  - java -jar ./map-filter-retry/target/*-all.jar
+  - ./gradlew -b ./map-filter-retry/build.gradle
+  - rm -rf ./map-filter-retry/build/libs/*javadoc*.jar
+  - rm -rf ./map-filter-retry/build/libs/*sources*.jar
+  - java -jar ./map-filter-retry/build/libs/*.jar
 
 before_deploy:
-- cd ${root}
-- ./gradlew documentation
-- ./gradlew clean
-- ./mvnw -Pdocs
-- mkdir -p ./target/generated-docs
-- cp -Rf ./target/generated-docs/index.html ./target/generated-docs/404.html
+  - cd ${root}
+  - ./gradlew documentation
+  - ./gradlew clean
+  - ./mvnw -Pdocs
+  - mkdir -p ./target/generated-docs
+  - cp -Rf ./target/generated-docs/index.html ./target/generated-docs/404.html
 
 deploy:
   provider: pages
@@ -80,12 +80,12 @@ deploy:
   target_branch: gh-pages
 
 before_cache:
-- for item in $(find ~/.gradle -name "*.lock");
-    do sudo rm -rf $item ;
-  done
+  - for item in $(find ~/.gradle -name "*.lock");
+      do sudo rm -rf $item ;
+    done
 
 cache:
   directories:
-  - $HOME/.m2
-  - $HOME/.gradle
-  - $HOME/.docker
+    - $HOME/.m2
+    - $HOME/.gradle
+    - $HOME/.docker

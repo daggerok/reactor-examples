@@ -11,7 +11,11 @@ allprojects {
   defaultTasks 'clean', 'build'
 
   dependencies {
-    implementation "io.projectreactor:reactor-core:3.0.5.RELEASE"
+    // Reactor 3
+    //implementation platform('io.projectreactor:reactor-bom:Californium-RELEASE:ext')
+    implementation 'io.projectreactor:reactor-core:3.2.5.RELEASE'
+    testImplementation 'io.projectreactor:reactor-test:3.2.5.RELEASE'
+
     // In java we trust...
     implementation "io.vavr:vavr:$vavrVersion"
     implementation "org.slf4j:slf4j-api:$slf4jVersion"

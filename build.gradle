@@ -6,9 +6,9 @@ buildscript {
     kotlinVersion = '1.2.71'
     jgivenVersion = '0.15.3'
     logbackVersion = '1.2.3'
-    lombokVersion = '1.18.2'
-    junitJupiterVersion = '5.3.1'
-    junitPlatformVersion = '1.3.0'
+    lombokVersion = '1.18.4'
+    junitJupiterVersion = '5.3.2'
+    junitPlatformVersion = '1.3.2'
     jacksonKotlinVersion = '2.9.7'
     materializecssVersion = '1.0.0'
     materialDesignIconsVersion = '3.0.1'
@@ -16,14 +16,14 @@ buildscript {
     springCloudVersion = 'Finchley.RELEASE'
     assertkJvmVersion = '0.12'
     assertjVersion = '3.11.1'
-    hamcrestVersion = '1.3'
+    hamcrestVersion = '2.1'
     junit4Version = '4.12'
   }
 
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-sam-with-receiver:$kotlinVersion"
     classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.16'
-    classpath 'org.jruby:jruby-complete:9.1.13.0'
+    classpath 'org.jruby:jruby-complete:9.2.5.0'
   }
 }
 
@@ -33,6 +33,7 @@ plugins {
   id 'idea'
   id 'eclipse'
 
+  id 'com.github.spotbugs' version '1.6.9' apply false
   id 'org.jetbrains.kotlin.jvm' version '1.2.71' apply false
   id 'org.jetbrains.kotlin.kapt' version '1.2.71' apply false
   id 'org.jetbrains.kotlin.plugin.jpa' version '1.2.71' apply false
@@ -41,19 +42,22 @@ plugins {
   id 'org.jetbrains.kotlin.plugin.allopen' version '1.2.71' apply false
 
   id 'io.spring.dependency-management' version '1.0.6.RELEASE' apply false
-  id 'com.github.johnrengelman.shadow' version '4.0.1' apply false
-  id 'io.franzbecker.gradle-lombok' version '1.14' apply false
-  id 'org.ajoberstar.git-publish' version '2.0.0-rc.2' apply false
-  id 'org.asciidoctor.convert' version '1.5.8.1' apply false
+  id 'com.github.johnrengelman.shadow' version '4.0.4' apply false
+  id 'org.ajoberstar.git-publish' version '2.0.0' apply false
+  id 'io.franzbecker.gradle-lombok' version '2.0' apply false
   id 'cn.bestwu.propdeps-eclipse' version '0.0.10' apply false
   id 'cn.bestwu.propdeps-maven' version '0.0.10' apply false
+  id 'org.asciidoctor.convert' version '1.5.8.1' apply false
   id 'cn.bestwu.propdeps-idea' version '0.0.10' apply false
   id 'cn.bestwu.propdeps' version '0.0.10' apply false
+  id 'com.github.ben-manes.versions' version '0.20.0'
 }
 
+import org.gradle.api.tasks.wrapper.Wrapper
+
 wrapper {
-  gradleVersion = '4.10.2'
-  distributionType = 'BIN'
+  gradleVersion = '5.1.1'
+  distributionType = Wrapper.DistributionType.BIN
 }
 
 apply from: "$projectDir/gradle/ide.gradle"
@@ -64,7 +68,8 @@ apply from: "$projectDir/gradle/java.gradle"
 apply from: "$projectDir/gradle/kotlin.gradle"
 apply from: "$projectDir/gradle/junit.gradle"
 apply from: "$projectDir/gradle/jacoco.gradle"
-apply from: "$projectDir/gradle/findbugs.gradle"
+apply from: "$projectDir/gradle/spotbugs.gradle"
+//apply from: "$projectDir/gradle/findbugs.gradle"
 apply from: "$projectDir/gradle/docs.gradle"
 //apply from: "$projectDir/gradle/build-scan.gradle"
 

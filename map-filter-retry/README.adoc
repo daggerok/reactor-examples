@@ -1,18 +1,6 @@
-= map-filter-retry image:https://travis-ci.org/daggerok/map-filter-retry.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/map-filter-retry"]
-
-////
-image:https://gitlab.com/daggerok/map-filter-retry/badges/master/build.svg["Build Status", link="https://gitlab.com/daggerok/map-filter-retry/-/jobs"]
-image:https://img.shields.io/bitbucket/pipelines/daggerok/map-filter-retry.svg["Build Status", link="https://bitbucket.com/daggerok/map-filter-retry"]
-////
+= random-examples
 
 //tag::content[]
-
-//Read link:https://daggerok.github.io/map-filter-retry[project reference documentation]
-
-links:
-
-- link:https://projectreactor.io/learn[Helpful presentation]
-- link:https://www.baeldung.com/reactor-core[Reactor intro]
 
 .build
 [source,java]

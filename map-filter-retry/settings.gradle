@@ -1,3 +1,1 @@
 rootProject.name = 'map-filter-retry'
-enableFeaturePreview 'STABLE_PUBLISHING'
-include 'docs'

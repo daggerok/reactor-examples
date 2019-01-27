@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="
-         http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.github.daggerok</groupId>
-  <version>0.0.1</version>
   <artifactId>reactor-examples</artifactId>
+  <version>0.0.1</version>
   <packaging>pom</packaging>
-
-  <modules>
-    <!--<module>module</module> -->
-  </modules>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -23,11 +16,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     <materializecss.version>1.0.0</materializecss.version>
-    <junit.jupiter.version>5.3.1</junit.jupiter.version>
+    <junit.jupiter.version>5.3.2</junit.jupiter.version>
     <jakson-kotlin.version>2.9.7</jakson-kotlin.version>
     <assertj.version>3.11.1</assertj.version>
     <assertk.version>0.12</assertk.version>
-    <lombok.version>1.18.2</lombok.version>
+    <lombok.version>1.18.4</lombok.version>
     <kotlin.version>1.2.71</kotlin.version>
     <jgiven.version>0.16.1</jgiven.version>
     <slf4j.version>1.7.25</slf4j.version>
@@ -47,53 +40,7 @@
     </dependencies>
   </dependencyManagement>
 
-  <repositories>
-    <repository>
-      <id>jcenter.bintray.com</id>
-      <url>https://jcenter.bintray.com</url>
-    </repository>
-  </repositories>
-
   <dependencies>
-    <!-- In java we trust -->
-    <!--
-    <dependency>
-      <groupId>io.vavr</groupId>
-      <artifactId>vavr</artifactId>
-      <version>${vavr.version}</version>
-    </dependency>
-    -->
-    <!--
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <optional>true</optional>
-    </dependency>
-    -->
-
-    <!-- logging -->
-    <!--
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
-    </dependency>
-    -->
-
-    <!-- Kotlin -->
-    <!--
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-kotlin</artifactId>
-      <version>${jakson-kotlin.version}</version>
-    </dependency>
-    -->
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -104,7 +51,6 @@
       <artifactId>kotlin-reflect</artifactId>
       <version>${kotlin.version}</version>
     </dependency>
-
     <!-- testing -->
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
@@ -112,7 +58,6 @@
       <version>${kotlin.version}</version>
       <scope>test</scope>
     </dependency>
-
     <!-- assertj -->
     <dependency>
       <groupId>org.assertj</groupId>
@@ -126,7 +71,6 @@
       <version>${assertk.version}</version>
       <scope>test</scope>
     </dependency>
-
     <!-- junit 4 -->
     <dependency>
       <groupId>junit</groupId>
@@ -140,7 +84,6 @@
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
-
     <!-- junit 5 -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -154,7 +97,6 @@
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
-
     <!-- jgiven -->
     <dependency>
       <groupId>com.tngtech.jgiven</groupId>
@@ -178,28 +120,23 @@
 
   <build>
     <defaultGoal>clean package</defaultGoal>
-
     <plugins>
       <plugin>
         <artifactId>kotlin-maven-plugin</artifactId>
         <groupId>org.jetbrains.kotlin</groupId>
         <version>${kotlin.version}</version>
-
         <configuration>
           <jvmTarget>${maven.compiler.target}</jvmTarget>
           <compilerPlugins>
             <plugin>spring</plugin>
             <plugin>no-arg</plugin>
             <plugin>all-open</plugin>
-            <!--<plugin>jpa</plugin>-->
-            <!--<plugin>sam-with-receiver</plugin>-->
           </compilerPlugins>
           <pluginOptions>
             <option>all-open:annotation=javax.persistence.Entity</option>
             <option>no-arg:annotation=javax.persistence.Entity</option>
           </pluginOptions>
         </configuration>
-
         <executions>
           <execution>
             <id>kapt</id>
@@ -211,18 +148,8 @@
                 <sourceDir>src/main/kotlin</sourceDir>
                 <sourceDir>src/main/java</sourceDir>
               </sourceDirs>
-              <annotationProcessorPaths>
-                <!-- Specify your annotation processors here.
-                <annotationProcessorPath>
-                  <groupId>com.google.dagger</groupId>
-                  <artifactId>dagger-compiler</artifactId>
-                  <version>2.9</version>
-                </annotationProcessorPath>
-                -->
-              </annotationProcessorPaths>
             </configuration>
           </execution>
-
           <execution>
             <id>compile</id>
             <goals>
@@ -235,7 +162,6 @@
               </sourceDirs>
             </configuration>
           </execution>
-
           <execution>
             <id>test-compile</id>
             <goals>
@@ -249,7 +175,6 @@
             </configuration>
           </execution>
         </executions>
-
         <dependencies>
           <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -261,13 +186,6 @@
             <artifactId>kotlin-maven-noarg</artifactId>
             <version>${kotlin.version}</version>
           </dependency>
-          <!--
-          <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-maven-sam-with-receiver</artifactId>
-            <version>${kotlin.version}</version>
-          </dependency>
-          -->
         </dependencies>
       </plugin>
 
@@ -275,12 +193,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
-
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
         </configuration>
-
         <executions>
           <execution>
             <id>default-compile</id>
@@ -302,50 +218,17 @@
           </execution>
         </executions>
       </plugin>
-
-      <!-- fat jar -->
-      <!--
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <finalName>${project.artifactId}-${project.version}-all</finalName>
-          <appendAssemblyId>false</appendAssemblyId>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-              <mainClass>daggerok.AppKt</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-        <executions>
-          <execution>
-            <id>assemble-jar-with-dependencies</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      -->
-
       <!-- junit 5 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.1</version>
       </plugin>
-
       <!-- jgiven: `mvn verify` -->
       <plugin>
         <groupId>com.tngtech.jgiven</groupId>
         <artifactId>jgiven-maven-plugin</artifactId>
         <version>${jgiven.version}</version>
-
         <executions>
           <execution>
             <goals>
@@ -353,7 +236,6 @@
             </goals>
           </execution>
         </executions>
-
         <configuration>
           <format>html</format>
           <outputDirectory>${project.build.directory}/jgiven-report</outputDirectory>
@@ -361,69 +243,6 @@
       </plugin>
     </plugins>
   </build>
-
-  <!--
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  -->
-
-  <!-- mvn verify site -->
-  <!-- generate findbugs html report `target/site/findbugs.html as part of maven-project-info-report -->
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>3.7.1</version>
-
-        <configuration>
-          <reportPlugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>findbugs-maven-plugin</artifactId>
-              <configuration>
-                <!-- specify classes for analysis -->
-                <onlyAnalyze>*daggerok*</onlyAnalyze>
-              </configuration>
-            </plugin>
-          </reportPlugins>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>3.0.5</version>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
-
   <!-- mvn deploy -->
   <distributionManagement>
     <repository>
@@ -436,6 +255,7 @@
     <profile>
       <id>docs</id>
       <build>
+        <defaultGoal>clean process-resources</defaultGoal>
         <plugins>
           <plugin>
             <groupId>org.asciidoctor</groupId>
@@ -526,8 +346,6 @@
             </executions>
           </plugin>
         </plugins>
-
-        <defaultGoal>clean process-resources</defaultGoal>
       </build>
     </profile>
   </profiles>
