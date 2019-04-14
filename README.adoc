@@ -22,6 +22,8 @@ other examples:
 
 - link:https://github.com/daggerok/reactor-netty-example[Reactor Netty Server]
 
+rto do: linkhttps://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Action - Simon Baslé, Victor Grazi]
+
 links:
 
 - link:https://www.codingame.com/playgrounds/929/reactive-programming-with-reactor-3/Intro?fbclid=IwAR3aKiqkI1_xUr5zrwqzQz-4djGdtRbbOuBR8FC9wWfxgH33MUBvvm3fuFQ[Learn Reactor 3]

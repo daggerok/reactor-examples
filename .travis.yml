@@ -80,11 +80,10 @@ deploy:
   target_branch: gh-pages
 
 before_cache:
-  - for item in $(find ~/.gradle -name "*.lock");
-      do sudo rm -rf $item ;
-    done
+  - for item in $(find ~/.gradle -name "*.lock") ; do sudo rm -rf $item ; done
 
 cache:
+  packages: true
   directories:
     - $HOME/.m2
     - $HOME/.gradle
