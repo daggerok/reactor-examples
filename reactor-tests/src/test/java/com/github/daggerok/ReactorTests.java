@@ -3,9 +3,10 @@ package com.github.daggerok;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
-import reactor.test.StepVerifier;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.Arrays.asList;
 
@@ -53,7 +54,8 @@ class ReactorTests {
               "hohoho nonono")
         .map(line -> line.split("\\s+")) // "ololo trololo" -> ["ololo", "trololo"]
         .map(Arrays::asList) // Array("ololo", "trololo") -> List("ololo", "trololo")
-        .flatMap(Flux::fromIterable) // [List("ololo", "trololo"), List("hohoho nonono")] -> ["ololo", "trololo", "hohoho nonono"]
+        .flatMap(Flux::fromIterable) // [List("ololo", "trololo"), List("hohoho nonono")] -> ["ololo", "trololo",
+        // "hohoho nonono"]
         .zipWith(Flux.range(0, Integer.MAX_VALUE), (string, integer) -> integer + ". " + string)
         .subscribe(log::info);
   }
@@ -65,7 +67,8 @@ class ReactorTests {
               "hohoho ololo")
         .map(line -> line.split("\\s+")) // "ololo trololo" -> ["ololo", "trololo"]
         .map(Arrays::asList) // Array("ololo", "trololo") -> List("ololo", "trololo")
-        .flatMap(Flux::fromIterable) // [List("ololo", "trololo"), List("hohoho nonono")] -> ["ololo", "trololo", "hohoho nonono"]
+        .flatMap(Flux::fromIterable) // [List("ololo", "trololo"), List("hohoho nonono")] -> ["ololo", "trololo",
+        // "hohoho nonono"]
         .sort()
         .zipWith(Flux.range(0, Integer.MAX_VALUE), (string, integer) -> integer + ". " + string)
         .subscribe(log::info);
@@ -78,10 +81,33 @@ class ReactorTests {
               "hohoho ololo")
         .map(line -> line.split("\\s+")) // "ololo trololo" -> ["ololo", "trololo"]
         .map(Arrays::asList) // Array("ololo", "trololo") -> List("ololo", "trololo")
-        .flatMap(Flux::fromIterable) // [List("ololo", "trololo"), List("hohoho nonono")] -> ["ololo", "trololo", "hohoho nonono"]
+        .flatMap(Flux::fromIterable) // [List("ololo", "trololo"), List("hohoho nonono")] -> ["ololo", "trololo",
+        // "hohoho nonono"]
         .sort()
         .distinct()
         .zipWith(Flux.range(0, Integer.MAX_VALUE), (string, integer) -> integer + ". " + string)
         .subscribe(log::info);
+  }
+
+  @Test
+  void test_Flux_interval() throws InterruptedException {
+    Flux.zip(Flux.interval(Duration.ofMillis(333)),
+             Flux.range(0, 3))
+        .map(tick -> "tick" + tick)
+        .subscribe(log::info);
+
+    TimeUnit.SECONDS.sleep(1);
+  }
+
+  @Test
+  void test_Flux_merge() throws InterruptedException {
+    Flux<Integer> range = Flux.range(0, Integer.MAX_VALUE);
+    Flux.merge(Flux.zip(range, Flux.interval(Duration.ofMillis(300)))
+                   .map(tick -> "interval-3 " + tick),
+               Flux.zip(range, Flux.interval(Duration.ofMillis(500)))
+                   .map(tick -> "interval-2 " + tick))
+        .subscribe(log::info);
+
+    TimeUnit.SECONDS.sleep(1);
   }
 }
