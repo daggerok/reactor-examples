@@ -43,6 +43,9 @@ before_install:
 script:
   - export root=$(pwd)
   #
+  - ./mvnw -f reactor-tests/pom.xml
+  - ./gradlew -b reactor-tests/build.gradle.kts
+  #
   - ./mvnw -f ./random-examples/pom.xml
   - ./gradlew -b ./random-examples/build.gradle
   #
