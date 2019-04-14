@@ -3,6 +3,7 @@ package com.github.daggerok;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -109,5 +110,20 @@ class ReactorTests {
         .subscribe(log::info);
 
     TimeUnit.SECONDS.sleep(1);
+  }
+
+  @Test
+  void test_StepVerifier() {
+    Flux<String> numbers = Flux.range(10, 5)
+                               .map(String::valueOf)
+                               .doOnNext(log::info);
+
+    StepVerifier.create(numbers)
+                //.expectSubscription() // optional
+                .expectNext("10")
+                .expectNext("11", "12")
+                .expectNextCount(2)
+                .expectComplete()
+                .verify();
   }
 }
