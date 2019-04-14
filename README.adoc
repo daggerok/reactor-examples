@@ -2,6 +2,12 @@
 
 //tag::content[]
 
+== intro
+
+combine streams with: `Flux.merge`, `Flux.zip`, `Flux.first`, ...
+create streams with: `Flux.just`, `Flux.fromIterable`, `Flux.range`, `Flux.interval`, ...
+transform streams with: `Flux.skip`, `Flux.map`, `Flux.flatMap`, `Flux.filter`
+
 Read link:https://daggerok.github.io/reactor-examples[project reference documentation]
 
 .docker / docker-compose
