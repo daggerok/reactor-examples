@@ -5,10 +5,12 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.daggerok</groupId>
-  <artifactId>main-starter</artifactId>
+  <artifactId>reactor-tests</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
+    <reactor-bom.version>Bismuth-RELEASE</reactor-bom.version>
+
     <mainClass>com.github.daggerok.App</mainClass>
 
     <cdi-api.version>2.0</cdi-api.version>
@@ -35,6 +37,14 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-bom</artifactId>
+        <version>${reactor-bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
         <version>${junit-jupiter.version}</version>
@@ -45,6 +55,17 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+
+    </dependency>
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib</artifactId>

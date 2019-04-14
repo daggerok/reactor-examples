@@ -48,6 +48,8 @@ lombok {
   version = lombokVersion
 }
 
+val reactorBomVersion: String by project
+
 val weldVersion: String by project
 val cdiApiVersion: String by project
 val jandexVersion: String by project
@@ -59,10 +61,13 @@ val assertjVersion: String by project
 val junitJupiterVersion: String by project
 
 dependencies {
+  implementation(platform("io.projectreactor:reactor-bom:$reactorBomVersion"))
+  implementation("io.projectreactor:reactor-core")
+  testImplementation("io.projectreactor:reactor-test")
+
   implementation(kotlin("stdlib"))
   implementation(kotlin("reflect"))
   //implementation("io.vavr:vavr:0.10.0")
-  implementation("org.jboss.weld.se:weld-se-core:$weldVersion")
   implementation("org.jboss.weld.se:weld-se-core:$weldVersion")
   implementation("javax.enterprise:cdi-api:$cdiApiVersion")
   implementation("org.jboss:jandex:$jandexVersion")
@@ -141,4 +146,4 @@ tasks {
   }
 }
 
-defaultTasks("clean", "sources", "fatJar", "installDist")
+defaultTasks("clean", "sources", "fatJar", "installDist", "build")
