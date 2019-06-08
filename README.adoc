@@ -1,5 +1,9 @@
 = reactor-examples image:https://travis-ci.org/daggerok/reactor-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/reactor-examples"]
 
+to see:
+
+- link:https://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Action - Simon Baslé, Victor Grazi]
+
 //tag::content[]
 
 == intro
