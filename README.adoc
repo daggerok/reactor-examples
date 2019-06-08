@@ -28,7 +28,7 @@ other examples:
 
 - link:
 
-- https://github.com/daggerok/reactor-netty-example[Reactor Netty Server]
+- https://github.com/daggerok/reactor-netty-example[Reactor Netty Server sample on GitHub: daggerok/reactor-netty-example]
 - link:https://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Action - Simon Baslé, Victor Grazi]
 
 links:
