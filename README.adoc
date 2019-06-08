@@ -1,9 +1,5 @@
 = reactor-examples image:https://travis-ci.org/daggerok/reactor-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/reactor-examples"]
 
-to see:
-
-- link:https://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Action - Simon Baslé, Victor Grazi]
-
 //tag::content[]
 
 == intro
@@ -30,9 +26,10 @@ Read link:https://daggerok.github.io/reactor-examples[project reference document
 
 other examples:
 
-- link:https://github.com/daggerok/reactor-netty-example[Reactor Netty Server]
+- link:
 
-rto do: linkhttps://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Action - Simon Baslé, Victor Grazi]
+- https://github.com/daggerok/reactor-netty-example[Reactor Netty Server]
+- link:https://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Action - Simon Baslé, Victor Grazi]
 
 links:
 
