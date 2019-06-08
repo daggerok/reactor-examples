@@ -7,17 +7,19 @@ env:
   global:
     - TERM=dumb
     - secure: TAsK9QeWPnBvISvptzerQKiyIYfGrpSN/ZSYITVpFbAd0P8uY7o43cEC37ltBCpHp/nXmZ7SwJdw49rdsS/Lun4lPLTozyoAZJdVtjbIC6Oq/KohULSVa/AOphV/rjZU+2uM3BJy6wXRs11IEMJWqGMtkYmuBs4LIqUy9Juc8F7M2HpSBsSaEne6fakg4vfWMHeLFJFhEw0TDRbNFhXCGhnxF9aPKlLJIViibzoPpzJdep7E0TiUbiZAQ3lOX32CFsDq9y/xHzIunQFo7VVT4uQLqtuBq42LoxCbboFKRdWG/hUTML3c6kdl8SIjElnzX3aed6bbw+KxRAGcIGse/eHjlq0Pu7Gies+dTk3gUyaCbDMP5+cumOd6VjbKXVgKaiJlyzxTa2UoFSkzQhp9aGohxph377um5FkYoDDWv7eG+hcGXhPBRhK6e052kAU/Ug0b1T+I7LBSxxCV9buijY7GgqDOrErpmSJ435KgmiNpUtXItGQBak7pL7285672xHDwJ0Zc2zg7NvoEImeFlRXTTrfg+Zg/C8wx2IF2+KIY3gLZaxdcLLy9b9NUdDKS46MVvd4G/PdxJJgt5FbSuGoXSmXmTwWA/VeAvD+c6mjf7LUfQTVuq2BuLicf2V7gz7EhCZCjG208h7RxoLx8UZZtqVJ6bLt+xU68hOJOhpo=
-language: python
+language: java
 jdk: openjdk8
 python: 3.8
 addons:
   apt:
     packages:
       - curl
+      - python3-dev
+      - python3-pip
 install: true
 before_install:
-  - python -m pip install --upgrade pip setuptools
-  - python -m pip install --upgrade httpie
+  - python3 -m pip install --upgrade pip setuptools
+  - python3 -m pip install --upgrade httpie
   #
   - if [ ! -f ${HOME}/.local/daggerok/bash-functions/master/main.bash ] ; then
       mkdir -p ${HOME}/.local/daggerok/bash-functions/master ;
@@ -28,13 +30,6 @@ before_install:
 before_cache:
   - find ~/.gradle -name "fileHashes.bin" -print0 | xargs -0 rm -rfv '{}'
   - for item in $(find ~/.gradle -name "*.lock") ; do rm -rfv $item ; done
-cache:
-  pip: true
-  packages: true
-  directories:
-    - ~/.m2
-    - ~/.gradle
-    - ~/.local/daggerok
 jobs:
   include:
     - stage: test
@@ -55,7 +50,8 @@ jobs:
     - stage: test
       name: random-examples gradle
       script:
-        - cd $TRAVIS_BUILD_DIR && ./gradlew -b ./random-examples/build.gradle
+        - cd $TRAVIS_BUILD_DIR/random-examples && ./gradlew -v
+        - cd $TRAVIS_BUILD_DIR/random-examples && ./gradlew
     - stage: test
       name: map-filter-buffer maven
       script:
@@ -76,7 +72,7 @@ jobs:
     - stage: test
       name: map-filter-retry gradle
       script:
-        - cd $TRAVIS_BUILD_DIR && ./gradlew -b ./map-filter-retry/build.gradle
+        - cd $TRAVIS_BUILD_DIR/map-filter-retry && ./gradlew
         - rm -rf $TRAVIS_BUILD_DIR/map-filter-retry/build/libs/*javadoc*.jar
         - rm -rf ./map-filter-retry/build/libs/*sources*.jar
         - java -jar $TRAVIS_BUILD_DIR/map-filter-retry/build/libs/*.jar
@@ -91,11 +87,17 @@ jobs:
         - cp -Rf $TRAVIS_BUILD_DIR/target/generated-docs/index.html $TRAVIS_BUILD_DIR/target/generated-docs/404.html
       deploy: &pages
         provider: pages
+        on:
+          branch: master
         skip-cleanup: true
         keep-history: true
         target_branch: gh-pages
-        local-dir: $TRAVIS_BUILD_DIR/target/generated-docs
-        # travis encrypt GITHUB_TOKEN=<your github repo token> --add
         github-token: "$GITHUB_TOKEN"
-        on:
-          branch: master
+        local-dir: $TRAVIS_BUILD_DIR/target/generated-docs
+cache:
+  pip: true
+  packages: true
+  directories:
+    - ~/.m2
+    - ~/.gradle
+    - ~/.local/daggerok

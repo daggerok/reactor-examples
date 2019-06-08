@@ -1,5 +1,9 @@
 = reactor-examples image:https://travis-ci.org/daggerok/reactor-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/reactor-examples"]
 
+to see:
+
+- link:https://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Action - Simon Baslé, Victor Grazi]
+
 //tag::content[]
 
 == intro
@@ -45,6 +49,7 @@ rto do: linkhttps://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Acti
 
 links:
 
+- link:https://www.youtube.com/watch?v=pyqIpqCt8PU[Reactive Performance by Oleh Dokuka]
 - link:https://www.codingame.com/playgrounds/929/reactive-programming-with-reactor-3/Intro?fbclid=IwAR3aKiqkI1_xUr5zrwqzQz-4djGdtRbbOuBR8FC9wWfxgH33MUBvvm3fuFQ[Learn Reactor 3]
 - link:https://projectreactor.io/learn[Helpful presentation]
 - link:https://www.baeldung.com/reactor-core[Reactor intro]
