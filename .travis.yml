@@ -1,17 +1,17 @@
+dist: trusty
 notifications:
   email: false
-
+git:
+  quiet: true
+  depth: 1
 env:
   global:
     - TERM=dumb
     - secure: TAsK9QeWPnBvISvptzerQKiyIYfGrpSN/ZSYITVpFbAd0P8uY7o43cEC37ltBCpHp/nXmZ7SwJdw49rdsS/Lun4lPLTozyoAZJdVtjbIC6Oq/KohULSVa/AOphV/rjZU+2uM3BJy6wXRs11IEMJWqGMtkYmuBs4LIqUy9Juc8F7M2HpSBsSaEne6fakg4vfWMHeLFJFhEw0TDRbNFhXCGhnxF9aPKlLJIViibzoPpzJdep7E0TiUbiZAQ3lOX32CFsDq9y/xHzIunQFo7VVT4uQLqtuBq42LoxCbboFKRdWG/hUTML3c6kdl8SIjElnzX3aed6bbw+KxRAGcIGse/eHjlq0Pu7Gies+dTk3gUyaCbDMP5+cumOd6VjbKXVgKaiJlyzxTa2UoFSkzQhp9aGohxph377um5FkYoDDWv7eG+hcGXhPBRhK6e052kAU/Ug0b1T+I7LBSxxCV9buijY7GgqDOrErpmSJ435KgmiNpUtXItGQBak7pL7285672xHDwJ0Zc2zg7NvoEImeFlRXTTrfg+Zg/C8wx2IF2+KIY3gLZaxdcLLy9b9NUdDKS46MVvd4G/PdxJJgt5FbSuGoXSmXmTwWA/VeAvD+c6mjf7LUfQTVuq2BuLicf2V7gz7EhCZCjG208h7RxoLx8UZZtqVJ6bLt+xU68hOJOhpo=
-
 language: java
 jdk: oraclejdk8
-
 service:
   - docker
-
 addons:
   apt:
     sources:
@@ -20,15 +20,14 @@ addons:
       - google-chrome-stable
       - libappindicator1
       - fonts-liberation
+      - libxml2-utils
+      - python-pip
+      - docker-ce
       - bash
       - curl
-      - libxml2-utils
-      - docker-ce
+      - sudo
       - tree
       - jq
-      - python-pip
-      - sudo
-
 install: true
 before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
@@ -39,38 +38,45 @@ before_install:
   #
   - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
   - stop_any 8080 3000 80 >/dev/null
-
-script:
-  - export root=$(pwd)
-  #
-  - ./mvnw -f reactor-tests/pom.xml
-  - ./gradlew -b reactor-tests/build.gradle.kts
-  #
-  - ./mvnw -f ./random-examples/pom.xml
-  - ./gradlew -b ./random-examples/build.gradle
-  #
-  - ./mvnw -f ./map-filter-buffer/pom.xml
-  - java -jar ./map-filter-buffer/target/*-all.jar
-  - ./gradlew -b ./map-filter-buffer/build.gradle
-  - rm -rf ./map-filter-buffer/build/libs/*javadoc*.jar
-  - rm -rf ./map-filter-buffer/build/libs/*sources*.jar
-  - java -jar ./map-filter-buffer/build/libs/*.jar
-  #
-  - ./mvnw -f ./map-filter-retry/pom.xml
-  - java -jar ./map-filter-retry/target/*-all.jar
-  - ./gradlew -b ./map-filter-retry/build.gradle
-  - rm -rf ./map-filter-retry/build/libs/*javadoc*.jar
-  - rm -rf ./map-filter-retry/build/libs/*sources*.jar
-  - java -jar ./map-filter-retry/build/libs/*.jar
-
+before_cache:
+  - for item in $(find ~/.gradle -name "*.lock") ; do sudo rm -rf $item ; done
+cache:
+  packages: true
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle
+    - $HOME/.docker
+jobs:
+  include:
+    - stage: openjdk8
+      name: openjdk8
+      script:
+        - ./mvnw -f $TRAVIS_BUILD_DIR/reactor-tests/pom.xml
+        - ./gradlew -b $TRAVIS_BUILD_DIR/reactor-tests/build.gradle.kts
+        #
+        - ./mvnw -f $TRAVIS_BUILD_DIR/random-examples/pom.xml
+        - ./gradlew -b $TRAVIS_BUILD_DIR/random-examples/build.gradle
+        #
+        - ./mvnw -f $TRAVIS_BUILD_DIR/map-filter-buffer/pom.xml
+        - java -jar $TRAVIS_BUILD_DIR/map-filter-buffer/target/*-all.jar
+        - ./gradlew -b $TRAVIS_BUILD_DIR/map-filter-buffer/build.gradle
+        - rm -rf $TRAVIS_BUILD_DIR/map-filter-buffer/build/libs/*javadoc*.jar
+        - rm -rf $TRAVIS_BUILD_DIR/map-filter-buffer/build/libs/*sources*.jar
+        - java -jar $TRAVIS_BUILD_DIR/map-filter-buffer/build/libs/*.jar
+        #
+        - ./mvnw -f $TRAVIS_BUILD_DIR/map-filter-retry/pom.xml
+        - java -jar $TRAVIS_BUILD_DIR/map-filter-retry/target/*-all.jar
+        - ./gradlew -b $TRAVIS_BUILD_DIR/map-filter-retry/build.gradle
+        - rm -rf $TRAVIS_BUILD_DIR/map-filter-retry/build/libs/*javadoc*.jar
+        - rm -rf ./map-filter-retry/build/libs/*sources*.jar
+        - java -jar $TRAVIS_BUILD_DIR/map-filter-retry/build/libs/*.jar
 before_deploy:
-  - cd ${root}
+  - cd $TRAVIS_BUILD_DIR
   - ./gradlew documentation
   - ./gradlew clean
   - ./mvnw -Pdocs
-  - mkdir -p ./target/generated-docs
-  - cp -Rf ./target/generated-docs/index.html ./target/generated-docs/404.html
-
+  - mkdir -p $TRAVIS_BUILD_DIR/target/generated-docs
+  - cp -Rf $TRAVIS_BUILD_DIR/target/generated-docs/index.html $TRAVIS_BUILD_DIR/target/generated-docs/404.html
 deploy:
   provider: pages
   skip-cleanup: true
@@ -79,15 +85,5 @@ deploy:
   keep-history: true
   on:
     branch: master
-  local-dir: target/generated-docs
+  local-dir: $TRAVIS_BUILD_DIR/target/generated-docs
   target_branch: gh-pages
-
-before_cache:
-  - for item in $(find ~/.gradle -name "*.lock") ; do sudo rm -rf $item ; done
-
-cache:
-  packages: true
-  directories:
-    - $HOME/.m2
-    - $HOME/.gradle
-    - $HOME/.docker
