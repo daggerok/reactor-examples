@@ -3,87 +3,106 @@ notifications:
   email: false
 git:
   quiet: true
-  depth: 1
+  depth: false
 env:
   global:
     - TERM=dumb
     - secure: TAsK9QeWPnBvISvptzerQKiyIYfGrpSN/ZSYITVpFbAd0P8uY7o43cEC37ltBCpHp/nXmZ7SwJdw49rdsS/Lun4lPLTozyoAZJdVtjbIC6Oq/KohULSVa/AOphV/rjZU+2uM3BJy6wXRs11IEMJWqGMtkYmuBs4LIqUy9Juc8F7M2HpSBsSaEne6fakg4vfWMHeLFJFhEw0TDRbNFhXCGhnxF9aPKlLJIViibzoPpzJdep7E0TiUbiZAQ3lOX32CFsDq9y/xHzIunQFo7VVT4uQLqtuBq42LoxCbboFKRdWG/hUTML3c6kdl8SIjElnzX3aed6bbw+KxRAGcIGse/eHjlq0Pu7Gies+dTk3gUyaCbDMP5+cumOd6VjbKXVgKaiJlyzxTa2UoFSkzQhp9aGohxph377um5FkYoDDWv7eG+hcGXhPBRhK6e052kAU/Ug0b1T+I7LBSxxCV9buijY7GgqDOrErpmSJ435KgmiNpUtXItGQBak7pL7285672xHDwJ0Zc2zg7NvoEImeFlRXTTrfg+Zg/C8wx2IF2+KIY3gLZaxdcLLy9b9NUdDKS46MVvd4G/PdxJJgt5FbSuGoXSmXmTwWA/VeAvD+c6mjf7LUfQTVuq2BuLicf2V7gz7EhCZCjG208h7RxoLx8UZZtqVJ6bLt+xU68hOJOhpo=
 language: java
-jdk: oraclejdk8
+jdk: openjdk8
+python: 3.7
 service:
   - docker
 addons:
   apt:
-    sources:
-      - google-chrome
     packages:
-      - google-chrome-stable
-      - libappindicator1
-      - fonts-liberation
-      - libxml2-utils
-      - python-pip
+      - python3-pip
       - docker-ce
       - bash
       - curl
       - sudo
       - tree
-      - jq
 install: true
 before_install:
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - export PATH=$HOME/.local/bin:$PATH
+  - pip3 install --user --upgrade pip setuptools
+  - pip install --user --upgrade docker-compose httpie
   #
-  - sudo pip install docker-compose httpie >/dev/null 2>&1
-  #
-  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-  - stop_any 8080 3000 80 >/dev/null
+  - if [ ! -f ${HOME}/.local/daggerok/bash-functions/master/main.bash ] ; then
+      mkdir -p ${HOME}/.local/daggerok/bash-functions/master ;
+      curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+    fi ;
+    source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+  - stop_any 5432 5672 27017 8080 3000 80 >/dev/null
 before_cache:
-  - for item in $(find ~/.gradle -name "*.lock") ; do sudo rm -rf $item ; done
+  - find ~/.gradle -name "fileHashes.bin" -print0 | xargs -0 rm -rfv '{}'
+  - for item in $(find ~/.gradle -name "*.lock") ; do rm -rfv $item ; done
 cache:
+  pip: true
   packages: true
   directories:
-    - $HOME/.m2
-    - $HOME/.gradle
-    - $HOME/.docker
+    - ~/.m2
+    - ~/.gradle
+    - ~/.docker
+    - ~/.local/daggerok
 jobs:
   include:
-    - stage: openjdk8
-      name: openjdk8
+    - stage: test
+      name: reactor-tests maven
       script:
-        - ./mvnw -f $TRAVIS_BUILD_DIR/reactor-tests/pom.xml
-        - ./gradlew -b $TRAVIS_BUILD_DIR/reactor-tests/build.gradle.kts
-        #
-        - ./mvnw -f $TRAVIS_BUILD_DIR/random-examples/pom.xml
-        - ./gradlew -b $TRAVIS_BUILD_DIR/random-examples/build.gradle
-        #
-        - ./mvnw -f $TRAVIS_BUILD_DIR/map-filter-buffer/pom.xml
+        - cd $TRAVIS_BUILD_DIR && ./mvnw -f ./reactor-tests/pom.xml
+    - stage: test
+      name: reactor-tests gradle
+      script:
+        - cd $TRAVIS_BUILD_DIR && ./gradlew -b ./reactor-tests/build.gradle.kts
+    - stage: test
+      name: random-examples maven
+      script:
+        - cd $TRAVIS_BUILD_DIR && ./mvnw -f ./random-examples/pom.xml
+    - stage: test
+      name: random-examples gradle
+      script:
+        - cd $TRAVIS_BUILD_DIR && ./gradlew -b ./random-examples/build.gradle
+    - stage: test
+      name: map-filter-buffer maven
+      script:
+        - cd $TRAVIS_BUILD_DIR && ./mvnw -f map-filter-buffer
         - java -jar $TRAVIS_BUILD_DIR/map-filter-buffer/target/*-all.jar
-        - ./gradlew -b $TRAVIS_BUILD_DIR/map-filter-buffer/build.gradle
+    - stage: test
+      name: map-filter-buffer gradle
+      script:
+        - cd $TRAVIS_BUILD_DIR && ./gradlew -b ./map-filter-buffer/build.gradle
         - rm -rf $TRAVIS_BUILD_DIR/map-filter-buffer/build/libs/*javadoc*.jar
         - rm -rf $TRAVIS_BUILD_DIR/map-filter-buffer/build/libs/*sources*.jar
         - java -jar $TRAVIS_BUILD_DIR/map-filter-buffer/build/libs/*.jar
-        #
-        - ./mvnw -f $TRAVIS_BUILD_DIR/map-filter-retry/pom.xml
+    - stage: test
+      name: map-filter-retry maven
+      script:
+        - cd $TRAVIS_BUILD_DIR && ./mvnw -f map-filter-retry
         - java -jar $TRAVIS_BUILD_DIR/map-filter-retry/target/*-all.jar
-        - ./gradlew -b $TRAVIS_BUILD_DIR/map-filter-retry/build.gradle
+    - stage: test
+      name: map-filter-retry gradle
+      script:
+        - cd $TRAVIS_BUILD_DIR && ./gradlew -b ./map-filter-retry/build.gradle
         - rm -rf $TRAVIS_BUILD_DIR/map-filter-retry/build/libs/*javadoc*.jar
         - rm -rf ./map-filter-retry/build/libs/*sources*.jar
         - java -jar $TRAVIS_BUILD_DIR/map-filter-retry/build/libs/*.jar
-before_deploy:
-  - cd $TRAVIS_BUILD_DIR
-  - ./gradlew documentation
-  - ./gradlew clean
-  - ./mvnw -Pdocs
-  - mkdir -p $TRAVIS_BUILD_DIR/target/generated-docs
-  - cp -Rf $TRAVIS_BUILD_DIR/target/generated-docs/index.html $TRAVIS_BUILD_DIR/target/generated-docs/404.html
-deploy:
-  provider: pages
-  skip-cleanup: true
-  # travis encrypt GITHUB_TOKEN=<your github repo token> --add
-  github-token: "$GITHUB_TOKEN"
-  keep-history: true
-  on:
-    branch: master
-  local-dir: $TRAVIS_BUILD_DIR/target/generated-docs
-  target_branch: gh-pages
+    - stage: deploy
+      name: gh-pages
+      script: false
+      before_deploy:
+        - cd $TRAVIS_BUILD_DIR && ./gradlew documentation
+        - cd $TRAVIS_BUILD_DIR && ./gradlew clean
+        - cd $TRAVIS_BUILD_DIR && ./mvnw -Pdocs
+        - mkdir -p $TRAVIS_BUILD_DIR/target/generated-docs
+        - cp -Rf $TRAVIS_BUILD_DIR/target/generated-docs/index.html $TRAVIS_BUILD_DIR/target/generated-docs/404.html
+      deploy: &pages
+        provider: pages
+        skip-cleanup: true
+        keep-history: true
+        target_branch: gh-pages
+        local-dir: $TRAVIS_BUILD_DIR/target/generated-docs
+        # travis encrypt GITHUB_TOKEN=<your github repo token> --add
+        github-token: "$GITHUB_TOKEN"
+        on:
+          branch: master
