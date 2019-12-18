@@ -89,7 +89,7 @@ jobs:
         - java -jar $TRAVIS_BUILD_DIR/map-filter-retry/build/libs/*.jar
     - stage: deploy
       name: gh-pages
-      script: false
+      script: skip
       before_deploy:
         - cd $TRAVIS_BUILD_DIR && ./gradlew documentation
         - cd $TRAVIS_BUILD_DIR && ./gradlew clean
