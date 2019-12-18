@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>reactor-examples (0.0.1)</title>
-<date>2019-06-09 15:05:59 UTC</date>
+<date>2019-12-18 19:08:46 UTC</date>
 <author>
 <personname>
 <firstname>Maksim</firstname>
@@ -16,7 +16,7 @@
 <revhistory>
 <revision>
 <revnumber>0.0.1</revnumber>
-<date>2019-06-09 15:05:59 UTC</date>
+<date>2019-12-18 19:08:46 UTC</date>
 <authorinitials>MK</authorinitials>
 </revision>
 </revhistory>
@@ -27,9 +27,9 @@
 </chapter>
 <chapter xml:id="intro">
 <title>intro</title>
-<simpara>combine streams with: <literal>Flux.merge</literal>, <literal>Flux.zip</literal>, <literal>Flux.first</literal>, &#8230;&#8203;
-create streams with: <literal>Flux.just</literal>, <literal>Flux.fromIterable</literal>, <literal>Flux.range</literal>, <literal>Flux.interval</literal>, &#8230;&#8203;
-transform streams with: <literal>Flux.skip</literal>, <literal>Flux.map</literal>, <literal>Flux.flatMap</literal>, <literal>Flux.filter</literal></simpara>
+<simpara>combine streams with: <literal>Flux.merge</literal>, <literal>Flux.zip</literal>, <literal>Flux.first</literal>, &#8230;&#8203;</simpara>
+<simpara>create streams with: <literal>Flux.just</literal>, <literal>Flux.fromIterable</literal>, <literal>Flux.range</literal>, <literal>Flux.interval</literal>, &#8230;&#8203;</simpara>
+<simpara>transform streams with: <literal>Flux.skip</literal>, <literal>Flux.map</literal>, <literal>Flux.flatMap</literal>, <literal>Flux.filter</literal></simpara>
 <simpara>Read <link xl:href="https://daggerok.github.io/reactor-examples">project reference documentation</link></simpara>
 <formalpara>
 <title>docker / docker-compose</title>
