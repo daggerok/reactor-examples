@@ -28,6 +28,7 @@ Read link:https://daggerok.github.io/reactor-examples[project reference document
 
 _other examples_
 
+- https://github.com/daggerok/reactive-programming-with-reactor-3
 - link:https://github.com/daggerok/webflux-reactor-broadcaster[Project Reactor Broadcaster]
 - link:https://github.com/daggerok/spring-5-examples[Spring Boot 2.x and Spring 5.x examples]
 - link:https://github.com/daggerok/reactor-netty-example[Reactor Netty Server sample on GitHub: daggerok/reactor-netty-example]
