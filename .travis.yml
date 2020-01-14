@@ -1,4 +1,3 @@
-dist: trusty
 notifications:
   email: false
 git:
