@@ -1,0 +1,24 @@
+allprojects {
+  apply plugin: 'java'
+
+  apply plugin: 'io.franzbecker.gradle-lombok'
+  lombok.version = project.lombokVersion
+
+  version = '0.0.1'
+  group = 'com.github.daggerok'
+  sourceCompatibility = targetCompatibility = "$javaVersion"
+
+  defaultTasks 'clean', 'build'
+
+  dependencies {
+    // Reactor 3
+    implementation platform('io.projectreactor:reactor-bom:Californium-RELEASE')
+    implementation 'io.projectreactor:reactor-core'
+    testImplementation 'io.projectreactor:reactor-test'
+
+    // In java we trust...
+    implementation "io.vavr:vavr:$vavrVersion"
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
+  }
+}

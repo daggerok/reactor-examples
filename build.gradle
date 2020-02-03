@@ -1,0 +1,50 @@
+buildscript {
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-sam-with-receiver:$kotlinVersion"
+    classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.16'
+    classpath 'org.jruby:jruby-complete:9.2.5.0'
+  }
+}
+
+plugins {
+  //id 'com.gradle.build-scan' version '1.16'
+  id 'idea'
+  id 'eclipse'
+  id 'com.github.spotbugs' version '1.6.9' apply false
+  id 'org.jetbrains.kotlin.jvm' version '1.3.30' apply false
+  id 'org.jetbrains.kotlin.kapt' version '1.3.30' apply false
+  id 'org.jetbrains.kotlin.plugin.jpa' version '1.3.30' apply false
+  id 'org.jetbrains.kotlin.plugin.noarg' version '1.3.30' apply false
+  id 'org.jetbrains.kotlin.plugin.spring' version '1.3.30' apply false
+  id 'org.jetbrains.kotlin.plugin.allopen' version '1.3.30' apply false
+
+  id 'io.spring.dependency-management' version '1.0.6.RELEASE' apply false
+  id 'com.github.johnrengelman.shadow' version '4.0.4' apply false
+  id 'org.ajoberstar.git-publish' version '2.0.0' apply false
+  id 'io.franzbecker.gradle-lombok' version '2.0' apply false
+  id 'cn.bestwu.propdeps-eclipse' version '0.0.10' apply false
+  id 'cn.bestwu.propdeps-maven' version '0.0.10' apply false
+  id 'org.asciidoctor.convert' version '1.5.8.1' apply false
+  id 'cn.bestwu.propdeps-idea' version '0.0.10' apply false
+  id 'cn.bestwu.propdeps' version '0.0.10' apply false
+  id 'com.github.ben-manes.versions' version '0.20.0'
+}
+
+wrapper {
+  gradleVersion = '5.1.1'
+  distributionType = Wrapper.DistributionType.BIN
+}
+
+apply from: "$projectDir/gradle/ide.gradle"
+apply from: "$projectDir/gradle/clean.gradle"
+apply from: "$projectDir/gradle/repositories.gradle"
+apply from: "$projectDir/gradle/base.gradle"
+apply from: "$projectDir/gradle/java.gradle"
+apply from: "$projectDir/gradle/kotlin.gradle"
+apply from: "$projectDir/gradle/junit.gradle"
+apply from: "$projectDir/gradle/jacoco.gradle"
+apply from: "$projectDir/gradle/spotbugs.gradle"
+//apply from: "$projectDir/gradle/findbugs.gradle"
+apply from: "$projectDir/gradle/docs.gradle"
+//apply from: "$projectDir/gradle/build-scan.gradle"
+

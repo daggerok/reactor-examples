@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+  <Properties>
+    <Property name="LOG_LEVEL_PATTERN">%5p</Property>
+    <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xEx</Property>
+    <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+    <Property name="LOG_PATTERN">%style{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %style{${LOG_LEVEL_PATTERN}} %style{%pid}{magenta} %style{---}{faint} %style{[%15.15t]}{faint} %style{%-40.40c{1.}}{cyan} %style{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+  </Properties>
+  <Appenders>
+    <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+      <PatternLayout pattern="${LOG_PATTERN}" />
+    </Console>
+  </Appenders>
+  <Loggers>
+    <logger name="org.jboss.weld" level="WARN" additivity="false">
+      <appender-ref ref="ConsoleAppender"/>
+    </logger>
+    <logger name="daggerok" level="ALL" additivity="false">
+      <appender-ref ref="ConsoleAppender"/>
+    </logger>
+    <Root level="INFO">
+      <AppenderRef ref="ConsoleAppender"/>
+    </Root>
+  </Loggers>
+</Configuration>
