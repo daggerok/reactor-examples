@@ -9,7 +9,7 @@ class TopicProcessorTest {
   @Test
   void test_deprecated() {
     System.out.println("deprecated");
-
+    //
     FluxProcessor<String, String> topicProcessor = reactor.core.publisher.TopicProcessor.create();
     //
     topicProcessor.subscribe(s -> System.out.println("A: " + s));
@@ -25,7 +25,7 @@ class TopicProcessorTest {
   @Test
   void test_replacement() {
     System.out.println("replacement");
-
+    //
     FluxProcessor<String, String> topicProcessor = reactor.extra.processor.TopicProcessor.create();
     //
     topicProcessor.subscribe(s -> System.out.println("A: " + s));
@@ -41,7 +41,7 @@ class TopicProcessorTest {
   @Test
   void test_alternative() {
     System.out.println("alternative");
-
+    //
     FluxProcessor<String, String> topicProcessor = reactor.core.publisher.DirectProcessor.create();
     //
     topicProcessor.subscribe(s -> System.out.println("A: " + s));
