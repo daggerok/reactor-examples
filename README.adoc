@@ -1,4 +1,4 @@
-= reactor-examples image:https://travis-ci.org/daggerok/reactor-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/reactor-examples"] image:https://github.com/daggerok/reactor-examples/workflows/CI/badge.svg["CI", https://github.com/daggerok/reactor-examples/actions]
+= reactor-examples image:https://travis-ci.org/daggerok/reactor-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/reactor-examples"] image:https://github.com/daggerok/reactor-examples/workflows/CI/badge.svg["CI", link="https://github.com/daggerok/reactor-examples/actions?query=workflow%3ACI"]
 
 to see:
 
