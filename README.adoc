@@ -49,6 +49,8 @@ rto do: linkhttps://www.youtube.com/watch?v=kwuu1efzkf4[YouTube: Reactor in Acti
 
 links:
 
+- https://projectreactor.io/docs/core/3.2.0.M2/api/reactor/core/publisher/TopicProcessor.html
+- https://projectreactor.io/docs/core/3.2.0.M2/api/reactor/core/publisher/WorkQueueProcessor.html
 - link:https://www.youtube.com/watch?v=pyqIpqCt8PU[Reactive Performance by Oleh Dokuka]
 - link:https://www.codingame.com/playgrounds/929/reactive-programming-with-reactor-3/Intro?fbclid=IwAR3aKiqkI1_xUr5zrwqzQz-4djGdtRbbOuBR8FC9wWfxgH33MUBvvm3fuFQ[Learn Reactor 3]
 - link:https://projectreactor.io/learn[Helpful presentation]
