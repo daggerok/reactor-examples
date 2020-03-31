@@ -10,7 +10,7 @@ class WorkQueueProcessorTest {
   @Test
   void test_replacement() {
     System.out.println("replacement");
-
+    //
     FluxProcessor<String, String> workQueueProcessor = reactor.extra.processor.WorkQueueProcessor.create();
     //
     workQueueProcessor.subscribe(s -> System.out.println("A: " + s));
@@ -26,7 +26,7 @@ class WorkQueueProcessorTest {
   @Test
   void test_deprecated() {
     System.out.println("deprecated");
-
+    //
     FluxProcessor<String, String> workQueueProcessor = reactor.core.publisher.WorkQueueProcessor.create();
     //
     workQueueProcessor.subscribe(s -> System.out.println("A: " + s));
